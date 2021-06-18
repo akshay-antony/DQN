@@ -2,6 +2,9 @@ import numpy as np
 import math
 import random
 
+import torch
+
+
 class EpsilonDecay():
     def __init__(self,e_start,e_end,decay):
         self.e_start = e_start
@@ -16,8 +19,10 @@ class EpsilonDecay():
         if rand_num<=epsilon:
             #select the exploration
             action=random.randrange(action_number)
-            return action
+            return torch.as_tensor(action)
         else:
             #select exploitation
-            action= q_net(state).argmax().numpy()
+            action= q_net.forward(state.unsqueeze(0))
+            action=action.squeeze(0)
+            action=action.max(0)[1]
             return action

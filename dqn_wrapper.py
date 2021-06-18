@@ -13,6 +13,6 @@ class SkipFrame(gym.Wrapper):
             total_reward+=rew
             if done:
                 break
-        return obs,total_reward,done, info
+        return obs,total_reward, done, info
 
 
